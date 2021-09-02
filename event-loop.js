@@ -1,4 +1,9 @@
 const fs = require('fs') //Modules require
+const crypto = require('crypto')
+
+const start = Date.now()
+
+process.env.UV_THREADPOOL_SIZE = 2;
 
 setTimeout(() => { //Will execute frist because is outside a callback
     console.log('Timer 1 finished'), 0
@@ -21,6 +26,20 @@ fs.readFile('test-file.txt', () => {
 
 
     process.nextTick(() => console.log('process.nextick')) //Frist callback wich will be executed 
+
+    crypto.pbkdf2('Password', 'salt', 100000, 1024, 'sha512', () => {
+        console.log(Date.now() - start, "password encrypted")
+    })
+    crypto.pbkdf2('Password', 'salt', 100000, 1024, 'sha512', () => {
+        console.log(Date.now() - start, "password encrypted")
+    })
+    crypto.pbkdf2('Password', 'salt', 100000, 1024, 'sha512', () => {
+        console.log(Date.now() - start, "password encrypted")
+    })
+    crypto.pbkdf2('Password', 'salt', 100000, 1024, 'sha512', () => {
+        console.log(Date.now() - start, "password encrypted")
+    })
+    
 })
 
 console.log('Hello from top-level code!') //Frist of all because is a top-level-code
