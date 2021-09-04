@@ -13,18 +13,23 @@ server.on('request', (req, res) => {
     // })
 
     // 2 solution streams
+    // const readable = fs.createReadStream('test-file.txt')
+    // readable.on('data', chunk => {
+    //     res.write(chunk)
+    // })
+    // readable.on('end', () => {
+    //     res.end()
+    // })
+    // readable.on('error', err => {
+    //     console.log(err)
+    //     res.statusCode = 500;
+    //     res.end('File Not Found')
+    // })
+
+    // 3 solution streams
     const readable = fs.createReadStream('test-file.txt')
-    readable.on('data', chunk => {
-        res.write(chunk)
-    })
-    readable.on('end', () => {
-        res.end()
-    })
-    readable.on('error', err => {
-        console.log(err)
-        res.statusCode = 500;
-        res.end('File Not Found')
-    })
+    readable.pipe(res) // Essa solução evita o backpressure que é quando a leitura é mais rapida que o envio, o pipe controla o flow de dados.
+    //readableSource.pipe(writeableDest)
 })
 
 server.listen(8000, '127.0.0.1', () => {
