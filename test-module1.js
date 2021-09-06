@@ -8,6 +8,7 @@
 //     }
 // }
 
+
 module.exports = class { // more elegant
     add(a, b) {
         return a + b
